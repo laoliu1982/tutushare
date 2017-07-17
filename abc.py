@@ -14,6 +14,6 @@ print (df.columns)
 print (df.values)
 print ("test select")
 #do=df.iloc[:,4]
-do=df.loc[:,['close','volume']]
+do=df.loc[:,['close','volume','price_change','p_change','turnover']]
 print (do)
 

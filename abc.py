@@ -25,15 +25,16 @@ print ("--------------------------------------------")
 dayinstock=[]
 print (ts.get_sina_dd(stock,date='2017-06-28'))
 
-iovol=np.zeros((50,11))
 
 def oneinmonth(days,stock):
+
+    iovol=np.zeros((50,11))
     row=0
     inoutspan=0
     dayinstock=[]
     for x in dayrange:
         print (x)
-        df=ts.get_sina_dd(stock,x,vol=400)
+        df=ts.get_sina_dd(stock,x,vol=100)
         if not df is None:
             dt=ts.get_hist_data(stock,start=x,end=x)
             dtt=dt.loc[x,['volume','p_change','turnover','close']]
@@ -46,20 +47,25 @@ def oneinmonth(days,stock):
             iovol[row][9]=dtt.iloc[3]
 
             dayinstock.append(x)
-            iovol[row][0]=df[df.type=='买盘']['volume'].sum()
 
-            iovol[row][1]=df[df.type == '卖盘']['volume'].sum()
-            iovol[row][10]=inoutspan+iovol[row][0]-iovol[row][1]
-            inoutspan=iovol[row][10]
+            df=ts.get_sina_dd(stock,x,vol=400)
+            if not df is None:
+                iovol[row][0]=df[df.type=='买盘']['volume'].sum()
+
+                iovol[row][1]=df[df.type == '卖盘']['volume'].sum()
+                iovol[row][10]=inoutspan+iovol[row][0]-iovol[row][1]
+                inoutspan=iovol[row][10]
 
             time.sleep(0.1)
             df=ts.get_sina_dd(stock,x,vol=1000)
-            iovol[row][2]=df[df.type=='买盘']['volume'].sum()
-            iovol[row][3]=df[df.type == '卖盘']['volume'].sum()
+            if not df is None:
+                iovol[row][2]=df[df.type=='买盘']['volume'].sum()
+                iovol[row][3]=df[df.type == '卖盘']['volume'].sum()
             time.sleep(0.1)
             df=ts.get_sina_dd(stock,x,vol=2000)
-            iovol[row][4]=df[df.type=='买盘']['volume'].sum()
-            iovol[row][5]=df[df.type == '卖盘']['volume'].sum()
+            if not df is None:
+                iovol[row][4]=df[df.type=='买盘']['volume'].sum()
+                iovol[row][5]=df[df.type == '卖盘']['volume'].sum()
             row=row+1
     finalArray=iovol[0:row,:]
     print (finalArray)
@@ -75,3 +81,11 @@ def oneinmonth(days,stock):
 
 oneinmonth(dayrange,'600036')
 oneinmonth(dayrange,'601318')
+oneinmonth(dayrange,'000651')
+oneinmonth(dayrange,'002415')
+oneinmonth(dayrange,'000001')
+oneinmonth(dayrange,'000333')
+
+
+oneinmonth(dayrange,'600519')
+#

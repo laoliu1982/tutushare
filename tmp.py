@@ -8,16 +8,22 @@ df = ts.get_hist_data(stock,start='2017-07-24',end='2017-07-25')
 #ds = df.loc[:,['close','volume','p_change','price_change','turnover']]
 #print (df)
 
-df = ts.get_sina_dd(stock,'2017-07-24',vol=2000)
+df = ts.get_sina_dd(stock,'2017-07-06',vol=2000)
 ds= df[df.type=='买盘']
 
 do=df.groupby("type").size()
 print (do)
 print (type(do))
 print(do.index)
+
 print (do.values)
 #print (type(do.values))
 print(do.values[1])
+print (do.ix['买盘'])
+x=do.ix['卖盘']
+if not x is None:
+    print('bye')
+
 
 
 

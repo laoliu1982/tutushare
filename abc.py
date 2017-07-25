@@ -28,7 +28,7 @@ print (ts.get_sina_dd(stock,date='2017-06-28'))
 
 def oneinmonth(days,stock):
 
-    iovol=np.zeros((50,15))
+    iovol=np.zeros((50,14))
     row=0
     inoutspan=0
     dayinstock=[]
@@ -58,8 +58,15 @@ def oneinmonth(days,stock):
                 # for in out count
                 do=df.groupby("type").size()
                 print (do)
-                iovol[row][11] =do.values[1]
-                iovol[row][12] =do.values[2]
+                buy=do.ix['买盘']
+                sold=do.ix['卖盘']
+                buysold= do.ix['中性盘']
+                if not buy is None:
+                    iovol[row][11]=buy
+                if not sold is None:
+                    iovol[row][12]=sold
+                if not buysold is None:
+                    iovol[row][13]=buysold
 
             time.sleep(0.1)
             df=ts.get_sina_dd(stock,x,vol=1000)
@@ -74,14 +81,13 @@ def oneinmonth(days,stock):
                 iovol[row][5]=df[df.type == '卖盘']['volume'].sum()
                 do=df.groupby("type").size()
                 print (do)
-                iovol[row][13] =do.values[1]
-                iovol[row][14] =do.values[2]
+
             row=row+1
     finalArray=iovol[0:row,:]
-    print (finalArray)
-    print (dayinstock)
-    print (iovol)
-    dates=pd.DataFrame(finalArray,index=dayinstock,columns=['in400','out40','in1000','out1000','in2000','out2000','volume','p_change','turnover','close','inoutspan','in400count','out400count','in2000count','out2000count'])
+    #print (finalArray)
+    #print (dayinstock)
+   # print (iovol)
+    dates=pd.DataFrame(finalArray,index=dayinstock,columns=['in400','out40','in1000','out1000','in2000','out2000','volume','p_change','turnover','close','inoutspan','in400count','out400count','inout400cout'])
    # dates=pd.DataFrame(iovol,index=dayinstock,columns=['in400','out40','in1000','out1000','in2000','out2000','volume','p_change','turnover','close','inoutspan'])
 
     print ('googluck')

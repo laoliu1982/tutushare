@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+
 import tushare as ts
 import types
 import time
@@ -8,7 +9,7 @@ from numpy import array
 import matplotlib.pyplot as plt
 from datetime import datetime
 print (time.strftime("%Y-%m-%d %H:%M:%S"))
-stock ='601318'
+stock ='600516'
 #df=ts.get_sina_dd('601318',date="2017-07-18",vol=3000)
 #iovol=np.arange(1500).reshape(150,10)
 
@@ -19,15 +20,16 @@ def datelist(beginDate, endDate):
     date_l=[datetime.strftime(x,'%Y-%m-%d') for x in list(pd.date_range(start=beginDate, end=endDate))]
     return date_l
 
-dayrange = datelist("2017-06-03", "2017-07-30")
+dayrange = datelist("2017-06-03", "2017-08-20")
 print (dayrange)
 print ("--------------------------------------------")
 dayinstock=[]
-print (ts.get_sina_dd(stock,date='2017-06-28'))
+#print (ts.get_sina_dd(stock,date='2017-06-28'))
 
 
 def oneinmonth(days,stock):
-
+    now =time.localtime()
+    strtime=time.strftime("%Y-%m-%d",now)
     iovol=np.zeros((50,14))
     row=0
     inoutspan=0
@@ -92,21 +94,20 @@ def oneinmonth(days,stock):
 
     print ('googluck')
     print (dates)
-    csvname=stock+'.csv'
+    csvname=stock+strtime+'.csv'
     dates.to_csv(csvname)
 
+#oneinmonth(dayrange,'600516')
+#oneinmonth(dayrange,'600036')
 oneinmonth(dayrange,'601318')
+#oneinmonth(dayrange,'000651')
+#oneinmonth(dayrange,'002415')
+#oneinmonth(dayrange,'000001')
+#oneinmonth(dayrange,'000333')
+
+
+#oneinmonth(dayrange,'600519')
 '''
-oneinmonth(dayrange,'600036')
-oneinmonth(dayrange,'601318')
-oneinmonth(dayrange,'000651')
-oneinmonth(dayrange,'002415')
-oneinmonth(dayrange,'000001')
-oneinmonth(dayrange,'000333')
-
-
-oneinmonth(dayrange,'600519')
-
 oneinmonth(dayrange,'601001')
 oneinmonth(dayrange,'600862')
 oneinmonth(dayrange,'600516')

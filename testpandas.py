@@ -34,3 +34,9 @@ print (df2.describe())
 print (df2.mean())
 s=pd.Series(np.random.randint(0,10,size=100000))
 print(s.value_counts())
+df3=df2['A']
+df3=df2.loc[:,['A','B']]
+print (df3)
+df3.plot()
+plt.show()
+

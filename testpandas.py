@@ -1,4 +1,5 @@
 import pandas as pd
+<<<<<<< HEAD
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -49,3 +50,15 @@ print (type(df5))
 print (df5)
 #plt.show()
 
+=======
+import tushare as ts
+import os
+df=pd.read_csv('industry.csv')
+df=df['industry']
+
+print (df)
+for x in df:
+    print(x) 
+print (type(x))
+print (type(df))
+>>>>>>> 3f8f8f4432cb590be33e677fd03f6b22c8c850fa

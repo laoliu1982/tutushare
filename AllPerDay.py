@@ -12,8 +12,8 @@ def datelist(begin,end):
 
 logging.basicConfig(level=logging.DEBUG,format='%(asctime)s %(filename)s[line:%(lineno)d)] %(levelname)s %(message)s',datefmt='%Y-%m-%d %H:%M:%S',filename='mylog.log',filemode='w')
 today=time.strftime('%Y-%m-%d',time.localtime())
-daterange_l=datelist(today,today)
-engine=create_engine('mysql://u:p@x.com/getdayall?charset=utf8')
+daterange_l=datelist('2017-10-13','2017-10-13')
+engine=create_engine('mysql://root:Lewei50_MYSQL@localhost/test?charset=utf8')
 
 for x in daterange_l:
     try:
@@ -21,13 +21,14 @@ for x in daterange_l:
         df=ts.get_day_all(x)
         if not df is None:
           df['date']=x
-          df.to_csv('day'+x+'.csv')
-          df.to_sql('getdayall',engine,if_exists='append',index=False)
+          #df.to_csv('day'+x+'.csv')d
+          df.to_sql('gettodayall',engine,if_exists='append',index=False)
           time.sleep(0.2)
-          logging.info ('to csv succeed')
+          logging.info ('to sql succeed')
           
     except Exception as e:
-        print (x+'is not workday'+' error is'+str(e) )
+        logging.info(str(e))
         continue
+
     
     
